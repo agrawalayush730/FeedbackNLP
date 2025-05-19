@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Feedback CSV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        input[type="file"] {
+            margin-top: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background-color: #4a76fd;
+            color: white;
+            border: none;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3b5edb;
+        }
+
+        pre {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 25px;
+            max-height: 500px;
+            overflow: auto;
+        }
+
+        .status {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>📄 Upload Feedback CSV</h2>
+    <input type="file" id="csvFile" accept=".csv">
+    <button onclick="uploadCSV()">Analyze CSV</button>
+
+    <div class="status" id="statusText"></div>
+    <pre id="jsonOutput" style="display: none;"></pre>
+</div>
+
+<script>
+    async function uploadCSV() {
+        const fileInput = document.getElementById("csvFile");
+        const statusText = document.getElementById("statusText");
+        const output = document.getElementById("jsonOutput");
+        output.style.display = "none";
+        output.textContent = "";
+
+        if (!fileInput.files.length) {
+            statusText.textContent = "Please select a CSV file.";
+            statusText.className = "status error";
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        statusText.textContent = "Uploading and analyzing...";
+        statusText.className = "status";
+
+        try {
+            const response = await fetch("http://127.0.0.1:8001/upload-csv", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error("Upload failed with status " + response.status);
+            }
+
+            const json = await response.json();
+            output.textContent = JSON.stringify(json, null, 2);
+            output.style.display = "block";
+            statusText.textContent = "Analysis complete.";
+            statusText.className = "status";
+        } catch (error) {
+            statusText.textContent = "Error: " + error.message;
+            statusText.className = "status error";
+        }
+    }
+</script>
+</body>
+</html>

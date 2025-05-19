@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Feedback Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6fa;
+            padding: 2rem;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+        .chart-container {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            height: 400px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <h2>📊 Feedback Dashboard</h2>
+
+    <div class="chart-container">
+        <canvas id="categoryChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="sentimentChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="severityChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="positiveAspectsChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="aspectChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="feedbackOverTimeChart"></canvas>
+    </div>
+
+    <script>
+    // --- Chart rendering helpers ---
+    function renderPieChart(ctx, labels, data, title) {
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: [
+                        '#1cc88a', '#e74a3b', '#36b9cc', '#f6c23e', '#858796', '#4e73df', '#fd7e14', '#20c997'
+                    ]
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title,
+                        font: { size: 18 }
+                    },
+                    legend: { position: 'top' }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
+    function renderBarChart(ctx, labels, data, label, color, title) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: color
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title,
+                        font: { size: 18 }
+                    },
+                    legend: { display: !!label, position: 'top' }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+
+    async function fetchData() {
+        try {
+            const response = await fetch("http://127.0.0.1:8001/dashboard-data");
+            const result = await response.json();
+            if (result.status !== "success") throw new Error(result.message || "Server error");
+            return result.data;
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            alert("⚠️ Unable to load dashboard data. Please check the server or database.");
+            return null;
+        }
+    }
+
+    fetchData().then(data => {
+        if (!data) return;
+
+        // Category Sentiment Chart (stacked bar)
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categories = Object.keys(data.category_sentiment_counts);
+        const positiveCounts = categories.map(cat => data.category_sentiment_counts[cat]?.positive || 0);
+        const negativeCounts = categories.map(cat => data.category_sentiment_counts[cat]?.negative || 0);
+
+        new Chart(categoryCtx, {
+            type: 'bar',
+            data: {
+                labels: categories,
+                datasets: [
+                    {
+                        label: 'Positive',
+                        data: positiveCounts,
+                        backgroundColor: '#1cc88a'
+                    },
+                    {
+                        label: 'Negative',
+                        data: negativeCounts,
+                        backgroundColor: '#e74a3b'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Category-wise Sentiment Breakdown',
+                        font: { size: 18 }
+                    },
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    x: { stacked: true },
+                    y: { stacked: true, beginAtZero: true }
+                }
+            }
+        });
+
+        // Sentiment Distribution Pie
+        renderPieChart(
+            document.getElementById('sentimentChart').getContext('2d'),
+            Object.keys(data.sentiment_distribution),
+            Object.values(data.sentiment_distribution),
+            "Sentiment Distribution"
+        );
+
+        // Severity Level Pie
+        renderPieChart(
+            document.getElementById('severityChart').getContext('2d'),
+            Object.keys(data.severity_levels),
+            Object.values(data.severity_levels),
+            "Severity Level Breakdown"
+        );
+
+        // Positive Aspects Bar
+        renderBarChart(
+            document.getElementById('positiveAspectsChart').getContext('2d'),
+            Object.keys(data.positive_aspects),
+            Object.values(data.positive_aspects),
+            "Positive Aspects Mentions",
+            "#1cc88a",
+            "Top Positive Aspects"
+        );
+
+        // Aspect Mentions Bar
+        renderBarChart(
+            document.getElementById('aspectChart').getContext('2d'),
+            Object.keys(data.top_aspects),
+            Object.values(data.top_aspects),
+            "Aspect Mentions",
+            "#36b9cc",
+            "Top Mentioned Aspects"
+        );
+
+        // Feedback Over Time Bar
+        renderBarChart(
+            document.getElementById('feedbackOverTimeChart').getContext('2d'),
+            Object.keys(data.feedback_over_time),
+            Object.values(data.feedback_over_time),
+            "Feedback Entries",
+            "#f6c23e",
+            "Feedback Over Time"
+        );
+    });
+    </script>
+</body>
+</html>

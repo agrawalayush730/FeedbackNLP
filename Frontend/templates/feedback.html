@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback Analyzer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 850px;
+      margin: 40px auto;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    textarea, input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4c8bf5;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3a6edc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin: 4px 6px 4px 0;
+    }
+
+    .sentiment-positive { background-color: #d4edda; color: #155724; }
+    .sentiment-negative { background-color: #f8d7da; color: #721c24; }
+    .severity-low { background-color: #fff3cd; color: #856404; }
+    .severity-medium { background-color: #ffeeba; color: #795548; }
+    .severity-high { background-color: #f5c6cb; color: #721c24; }
+
+    .category-badge {
+      background-color: #d6d8ff;
+      color: #333;
+      border: 1px solid #bbb;
+    }
+
+    #output {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .legend {
+      background: #f1f1f1;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 30px;
+    }
+
+    em {
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📊 Feedback Analyzer</h1>
+
+  <form id="feedbackForm" onsubmit="return analyzeFeedback();">
+    <label for="user_id">User ID (optional):</label>
+    <input type="text" id="user_id" name="user_id" placeholder="e.g., user_001">
+
+    <label for="feedback_text">Enter Feedback:</label>
+    <textarea id="feedback_text" name="feedback_text" rows="5" placeholder="Write your feedback here..."></textarea>
+
+    <button type="submit">Analyze</button>
+  </form>
+
+  <div id="output"></div>
+
+  <script>
+    function getSentimentBadge(sentiment) {
+      if (sentiment === "positive") return `<span class="badge sentiment-positive" title="This expresses user satisfaction.">Positive</span>`;
+      if (sentiment === "negative") return `<span class="badge sentiment-negative" title="This expresses user dissatisfaction.">Negative</span>`;
+      return "";
+    }
+
+    function getSeverityBadge(severity) {
+      if (!severity) return "";
+      return `<span class="badge severity-${severity.toLowerCase()}" title="Severity reflects how serious the issue is.">${severity}</span>`;
+    }
+
+    async function analyzeFeedback() {
+      event.preventDefault();
+
+      const userId = document.getElementById("user_id").value.trim();
+      const feedback = document.getElementById("feedback_text").value.trim();
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = "";  // Clear previous output
+
+      if (!feedback) {
+        alert("Please enter feedback text.");
+        return false;
+      }
+
+      const payload = {
+        feedback_text: feedback,
+        user_id: userId || "anonymous"
+      };
+
+      try {
+        const response = await fetch("http://127.0.0.1:8001/analyze-feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        outputDiv.innerHTML = `
+          <h2>📄 Feedback Summary</h2>
+          <p><strong>User:</strong> ${data.user_id}</p>
+          <p><strong>Timestamp:</strong> ${data.timestamp}</p>
+          <p><strong>Feedback Text:</strong> <em>${data.feedback_text}</em></p>
+
+          <h3>📁 Categories</h3>
+          <p style="margin-top: -10px; color: #666;">These are the main topics detected in the feedback.</p>
+          <div>${data.category.map(c => `<span class="badge category-badge">${c}</span>`).join('')}</div>
+
+          <h3>✅ Positive Aspects</h3>
+          <p style="margin-top: -10px; color: #666;">These are areas the user liked or appreciated.</p>
+          <ul>${data.positive_aspects.length > 0 
+              ? data.positive_aspects.map(a => `<li><strong>${a}</strong> — Recognized as a <span class="badge sentiment-positive">positive</span> point.</li>`).join('')
+              : "<li><em>None detected.</em></li>"}</ul>
+
+          <h3>⚠️ Improvement Areas</h3>
+          <p style="margin-top: -10px; color: #666;">These are pain points or frustrations identified in the feedback.</p>
+          <ul>
+            ${data.improvement_areas.map(imp => `
+              <li>
+                <strong>${imp.aspect}</strong> — 
+                This was flagged as a 
+                ${getSentimentBadge(imp.sentiment)}
+                issue.
+                ${imp.severity ? `It is considered <strong>${getSeverityBadge(imp.severity)}</strong> in severity.` : ""}
+              </li>
+            `).join('')}
+          </ul>
+
+          <div class="legend">
+            <strong>Legend:</strong><br>
+            <span class="badge sentiment-negative">Negative</span> = The user found something problematic.<br>
+            <span class="badge sentiment-positive">Positive</span> = The user liked this aspect.<br>
+            <span class="badge severity-high">High</span>, <span class="badge severity-medium">Medium</span>, <span class="badge severity-low">Low</span> = How serious the issue is.
+          </div>
+        `;
+      } catch (error) {
+        console.error("Error:", error);
+        outputDiv.innerHTML = `<p style="color:red;">❌ Failed to analyze feedback. Please check your backend server.</p>`;
+      }
+
+      return false;
+    }
+  </script>
+
+</body>
+</html>

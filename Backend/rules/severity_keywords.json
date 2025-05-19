@@ -1,0 +1,27 @@
+{
+    "high": [
+        "crash", "crashes", "crashed", "freeze", "frozen", "unusable", "not working", "broken",
+        "unable to", "doesn't work", "won't open", "won't start", "cannot open", "can't open", "can't login", "can't sign in",
+        "stuck", "hang", "lost", "deleted", "data loss", "reset progress", "lost progress", "permanently lost",
+        "deleted account", "account banned", "permanently banned", "locked out", "forced close", "force close",
+        "crash loop", "boot loop", "corrupted", "corrupt", "wipe", "wiped", "erase", "erased",
+        "stuck on loading", "stuck on splash", "stuck forever", "disconnect", "disconnecting",
+        "refused", "refuses", "ban", "banned", "blocked", "suspend", "suspended", "unplayable"
+    ],
+    "medium": [
+        "slow", "lag", "laggy", "delay", "glitch", "unresponsive", "buffer", "buffering",
+        "sometimes", "occasionally", "frequently", "often", "randomly", "issue", "problem", "trouble",
+        "support did nothing", "no response", "no fix", "no solution", "doesn't load", "loading", "takes forever",
+        "rare glitch", "weird", "odd", "strange", "sometimes doesn't", "sometimes won't", "sometimes can't",
+        "sometimes fails", "sometimes broken", "sometimes not working", "sometimes doesn't work", "sometimes doesn't load",
+        "sometimes slow", "sometimes lag", "sometimes crash", "sometimes freeze", "sometimes disconnect", "sometimes stuck",
+        "sometimes bug", "sometimes glitch", "sometimes issue", "sometimes problem", "sometimes trouble", "sometimes error",
+        "update too frequent", "update too often", "update problem", "update issue"
+    ],
+    "low": [
+        "confusing", "inconsistent", "annoying", "cluttered", "tiny", "not like", "don't like", "wish",
+        "would be better", "could improve", "not a fan", "prefer", "eventually", "sorted itself out",
+        "not as good", "not great", "not bad", "not perfect", "could be better", "minor", "small issue",
+        "little problem", "slightly annoying", "not serious", "not urgent"
+    ]
+}

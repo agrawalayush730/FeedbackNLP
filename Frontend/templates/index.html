@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Analyzer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f7fa;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #444;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .nav-button {
+            padding: 12px 24px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            background-color: #4f46e5;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            min-width: 250px;
+        }
+        .nav-button:hover {
+            background-color: #3730a3;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Feedback Analyzer</h1>
+    <p>A powerful NLP tool to extract insights from mobile app feedback.</p>
+    <div class="button-container">
+        <a href="/feedback" class="nav-button">🔍 Query Individual Feedback</a>
+        <a href="/upload-csv" class="nav-button">📁 Upload CSV for Batch Analysis</a>
+        <a href="/dashboard" class="nav-button">📈 View BI Dashboard</a>
+    </div>
+</body>
+</html>

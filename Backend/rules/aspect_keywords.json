@@ -1,0 +1,53 @@
+{
+  "performance": [
+    "slow", "lag", "laggy", "freeze", "crash", "crashes", "crashed", "glitch", "bug", "unresponsive", "buffer", "buffering", "delay", "stuck", "hang", "restart", "broken", "smooth", "responsive", "fast", "optimization", "performance", "speed",
+    "disconnect", "disconnecting", "kick", "kicked", "overheat", "overheating", "memory", "storage", "reset", "frame drop", "fps", "frame rate", "load", "loading screen"
+  ],
+  "ui_ux": [
+    "ui","interface", "design", "layout", "button", "menu", "navigation", "screen", "display", "theme", "color", "font", "icon", "appearance", "look", "feel", "usability", "accessibility", "dark mode", "easy", "difficult", "organize", "search", "scroll", "swipe", "tap", "click", "intuitive", "confusing",
+    "joystick", "control", "controls", "camera", "zoom", "move", "movement", "touch", "gesture", "menu bar", "hud", "overlay", "pop up", "popup"
+  ],
+  "features": [
+    "feature", "function", "tool", "option", "setting", "update", "add", "remove", "include", "support", "integration", "customization", "filter", "effect", "slideshow", "draft", "save", "upload", "download", "edit", "editing", "video", "photo", "image", "music", "sound", "audio", "voice", "duet", "stitch", "live", "notification", "reminder", "alert", "badge", "message", "chat", "comment", "like", "follow", "favorite", "playlist", "folder", "share", "report", "block", "mute", "pin", "auto play", "algorithm", "recommendation", "fyp", "for you page",
+    "event", "events", "avatar", "skin", "costume", "customize", "customization", "shop", "market", "trade", "inventory", "item", "purchase", "buy", "sell", "gift", "reward", "achievement", "leaderboard", "voice chat", "text chat", "friend", "friends", "group", "party", "invite", "block list"
+  ],
+  "account": [
+    "login", "log in", "sign in", "sign up", "register", "account", "authentication", "password", "credentials", "verification", "logout", "log out", "reset", "ban", "banned", "suspend", "suspended", "kick", "kicked", "moderation", "report", "appeal", "recover", "restore", "reset password", "parental control", "age", "restriction", "verify", "verification", "delete", "deactivate", "profile", "email", "phone", "number", "security", "privacy"
+  ],
+  "ads": [
+    "ad", "ads", "advertisement", "advert", "commercial", "sponsored", "promotion", "pop-up", "pop up", "popup", "banner", "shop", "purchase", "buy", "sell", "coin", "payment", "reward", "gift", "monetize", "creator fund", "commission", "sale", "rewarded ad", "skip ad"
+  ],
+  "notifications": [
+    "notification", "alert", "reminder", "badge", "pop-up", "pop up", "popup", "push", "message", "spam", "inbox", "mute", "unmute"
+  ],
+  "content_community": [
+    "content", "video", "post", "creator", "comment", "like", "share", "follow", "favorite", "playlist", "folder", "trend", "challenge", "hashtag", "community", "group", "friend", "friends", "follower", "block", "mute", "report", "spam", "inappropriate", "guideline", "moderation", "ban", "banned", "suspend", "suspended", "shadowban", "algorithm", "recommendation", "fyp", "for you page",
+    "moderator", "toxicity", "toxic", "bully", "bullying", "harass", "harassment", "safe chat", "filter", "censor", "censorship", "friend request", "friend list", "guild", "clan", "event", "events", "challenge", "trending", "creator", "developer", "user generated", "ugc"
+  ],
+  "device_compatibility": [
+    "device", "phone", "tablet", "android", "ios", "iphone", "ipad", "samsung", "compatibility", "support", "version", "update", "operating system", "os", "bug", "crash", "freeze",
+    "chromebook", "pc", "computer", "laptop", "desktop", "windows", "mac", "mobile", "storage", "memory"
+  ],
+  "security_privacy": [
+    "security", "privacy", "permission", "data", "safe", "protection", "leak", "breach", "track", "collect", "share", "access", "control", "setting", "policy",
+    "hack", "hacker", "hacked", "phish", "phishing", "scam", "scammer", "parental control"
+  ],
+  "support_help": [
+    "support", "help", "assist", "contact", "customer service", "feedback", "report", "ticket", "response", "reply", "fix", "resolve", "solution", "faq", "guide", "manual", "instruction", "complaint"
+  ],
+  "audio_video": [
+    "audio", "sound", "music", "voice", "volume", "mute", "unmute", "sync", "delay", "video", "photo", "image", "slideshow", "edit", "editing", "filter", "effect", "quality", "resolution", "frame", "playback", "record", "recording", "stream", "streaming"
+  ],
+  "drafts_saving": [
+    "draft", "save", "saved", "unsaved", "lost", "delete", "restore", "backup", "recover", "upload", "download", "autosave"
+  ],
+  "algorithm_recommendation": [
+    "algorithm", "recommend", "recommendation", "fyp", "for you page", "trending", "trend", "personalize", "suggest", "suggestion", "feed", "curate", "curation", "ranking", "sort", "filter"
+  ],
+  "accessibility": [
+    "accessibility", "screen reader", "talkback", "voiceover", "font size", "color contrast", "easy", "difficult", "intuitive", "confusing", "language", "translate", "subtitle", "caption"
+  ],
+  "battery": [
+    "battery", "power", "drain", "drains", "draining", "charging", "charge", "charged", "discharge", "overheat", "overheating", "battery life", "power usage", "power consumption", "energy", "low battery", "battery saver"
+  ]
+}
