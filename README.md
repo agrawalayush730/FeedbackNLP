@@ -179,7 +179,7 @@ Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 **Ayush Agrawal**  
 *Data Scientist | NLP Practitioner | Fullstack Developer*  
 - 🔗 [GitHub](https://github.com/agrawalayush730)  
-- 🔗 [LinkedIn](https://www.linkedin.com/)  
+- 🔗 [LinkedIn](https://www.linkedin.com/in/ayush-agrawal-590254253/)  
 
 ---
 
