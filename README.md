@@ -185,4 +185,6 @@ Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is released under the MIT License.
+Usage is permitted for portfolio review, research, or educational demonstration.
+Commercial use, redistribution, or modification without attribution is discouraged.
